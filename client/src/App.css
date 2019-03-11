@@ -1,3 +1,4 @@
+@import "../src/css/nav/nav.css";
 @import "../src/css/home/home.css";
 @import "../src/css/auth/signup.css";
 
@@ -8,6 +9,7 @@
 
 .App {
   display: flex;
+  flex-wrap: wrap;
   width: 100%;
   justify-content: center;
   font-family: "Dosis", sans-serif;

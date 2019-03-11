@@ -44,7 +44,7 @@ class Login extends Component {
   };
 
   render() {
-    if (this.state.redirect) {
+    if (localStorage.getItem("token") || this.state.redirect) {
       return <Redirect to="/" />;
     }
     return (
