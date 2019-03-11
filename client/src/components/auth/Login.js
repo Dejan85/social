@@ -1,60 +1,62 @@
 import React, { Component } from "react";
 import { fetchData } from "./fetchData";
+import { Redirect } from "react-router-dom";
 
-class Signup extends Component {
+class Login extends Component {
   constructor() {
     super();
+
     this.state = {
-      name: "",
       email: "",
       password: "",
-      error: ""
+      error: "",
+      redirect: false
     };
   }
 
   onChange = name => e => {
     this.setState({
-      [name]: e.target.value,
-      error: ""
+      [name]: e.target.value
     });
   };
 
   onSubmit = e => {
     e.preventDefault();
-    const { name, email, password } = this.state;
-    const user = { name, email, password };
-    const route = "http://localhost:5000/signup";
+    const { email, password } = this.state;
+    const user = { email, password };
+    const route = "http://localhost:5000/login";
 
-    fetchData(user, route).then(data => {
-      if (data.error) this.setState({ error: data.error });
-      else
-        this.setState({
-          name: "",
-          email: "",
-          password: "",
-          error: ""
-        });
-    });
+    fetchData(user, route)
+      .then(data => {
+        if (data.error) this.setState({ error: data.error });
+        else
+          this.setState({
+            email: "",
+            password: "",
+            error: ""
+          });
+        localStorage.setItem("token", JSON.stringify(data.token));
+        this.setState({ redirect: true });
+      })
+      .catch(err => {
+        console.log(err);
+      });
   };
 
   render() {
+    if (this.state.redirect) {
+      return <Redirect to="/" />;
+    }
     return (
       <div className="signup_and_login">
-        <h1>Signup</h1>
+        <h1>Login</h1>
         <form onSubmit={this.onSubmit}>
           {this.state.error && (
             <div className="error">
               <h2>{this.state.error}</h2>
             </div>
           )}
-          <div className="input_holder">
-            <label>Name</label>
-            <input
-              type="text"
-              value={this.state.name}
-              onChange={this.onChange("name")}
-            />
-          </div>
+
           <div className="input_holder">
             <label>Email</label>
             <input
@@ -63,6 +65,7 @@ class Signup extends Component {
               onChange={this.onChange("email")}
             />
           </div>
+
           <div className="input_holder">
             <label>Password</label>
             <input
@@ -78,4 +81,4 @@ class Signup extends Component {
   }
 }
 
-export default Signup;
+export default Login;
