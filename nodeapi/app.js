@@ -5,6 +5,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const expressValidator = require("express-validator");
 const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
 dotenv.config();
 
@@ -32,6 +33,8 @@ app.use(function(err, req, res, next) {
     res.status(401).json({ error: "Unauthorized!" });
   }
 });
+// cors
+app.use(cors());
 
 //
 // ─── ROUTES ─────────────────────────────────────────────────────────────────────
