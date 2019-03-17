@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchData } from "./fetchData";
+import { postData } from "../common/fetchData";
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -24,9 +24,9 @@ class Login extends Component {
     e.preventDefault();
     const { email, password } = this.state;
     const user = { email, password };
-    const route = "http://localhost:5000/login";
+    const route = `${process.env.REACT_APP_API_URL}/login`;
 
-    fetchData(user, route)
+    postData(user, route)
       .then(data => {
         if (data.error) this.setState({ error: data.error });
         else
@@ -35,7 +35,7 @@ class Login extends Component {
             password: "",
             error: ""
           });
-        localStorage.setItem("token", JSON.stringify(data.token));
+        localStorage.setItem("token", JSON.stringify(data));
         this.setState({ redirect: true });
       })
       .catch(err => {
@@ -44,7 +44,7 @@ class Login extends Component {
   };
 
   render() {
-    if (localStorage.getItem("token") || this.state.redirect) {
+    if (this.state.redirect) {
       return <Redirect to="/" />;
     }
     return (

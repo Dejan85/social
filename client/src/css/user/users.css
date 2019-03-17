@@ -1,0 +1,67 @@
+.users {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 80px;
+}
+
+.users h1 {
+  padding-left: 230px;
+  font-weight: 600;
+}
+
+/* card */
+.card_container {
+  display: flex;
+  align-self: center;
+  flex-wrap: wrap;
+  padding-bottom: 50px;
+}
+
+.card {
+  width: 30%;
+  padding-top: 40px;
+  background: #ffffff;
+  border-left: 1px solid #e0dfe0;
+  border-bottom: 1px solid #a6a5a6;
+  border-right: 1px solid #e7e6e8;
+  box-shadow: 1px 2px 20px -10px;
+  margin-top: 50px;
+  margin-left: 20px;
+  padding-left: 10px;
+  padding-bottom: 20px;
+}
+
+.name {
+  font-size: 20px;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  font-weight: 400;
+}
+
+.email {
+  font-size: 17px;
+  font-weight: 500;
+  padding-bottom: 20px;
+}
+
+.card a {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ff9900;
+  border: none;
+  padding: 10px;
+  width: 100px;
+  color: white;
+  border-radius: 5px;
+  text-decoration: none;
+}
+
+.card area:hover {
+  background: #dd890b;
+}
+
+.card img {
+  width: 100px;
+}

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { fetchData } from "./fetchData";
+import { postData } from "../common/fetchData";
 
 class Signup extends Component {
   constructor() {
@@ -23,9 +23,9 @@ class Signup extends Component {
     e.preventDefault();
     const { name, email, password } = this.state;
     const user = { name, email, password };
-    const route = "http://localhost:5000/signup";
+    const route = `${process.env.REACT_APP_API_URL}/signup`;
 
-    fetchData(user, route).then(data => {
+    postData(user, route).then(data => {
       if (data.error) this.setState({ error: data.error });
       else
         this.setState({
