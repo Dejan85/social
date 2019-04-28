@@ -31,8 +31,6 @@ exports.updateUser = (req, res) => {
     user = _.extend(user, req.body); // extend - mutate the source object
     user.updated = Date.now();
     user.save((err) => {
-        console.log('radi');
-
         if (err) {
             return res.status(400).json({
                 error: "You are not authorized to preform this action"
@@ -42,7 +40,6 @@ exports.updateUser = (req, res) => {
         user.salt = undefined;
         user.hashed_password = undefined;
 
-        console.log(user);
         res.json({
             user
         });
