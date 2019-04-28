@@ -10,8 +10,8 @@ const { requireSignin } = require('../authorization');
 // controllers
 const { getPosts, createPost } = require('../controllers/post');
 
-router.get('/', requireSignin, getPosts);
-router.post('/post', createPostValidator, createPost);
+router.get('/', getPosts);
+router.post('/post', requireSignin, createPostValidator, createPost);
 
 
 module.exports = router;

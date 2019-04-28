@@ -4,5 +4,17 @@ dotenv.config();
 
 
 exports.requireSignin = expressJwt({
-    secret: process.env.JWT_SECRET
-})
+    // if the token is valid, express jwt appends the verified users id
+    // in an auth key to the erquest object
+    secret: process.env.JWT_SECRET,
+    userProperty: "auth"
+});
+
+exports.hasAuthorization = (req, res, next) => {
+    const authorized = req.profile && req.auth && req.profile._id && req.auth._id;
+    if (!authorized) {
+        return res.status(403).json({
+            error: "User is not aothorized to perform this action"
+        });
+    }
+};
