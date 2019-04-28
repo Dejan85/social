@@ -37,7 +37,9 @@ app.use(expressValidator());
 //
 
 const post = require('./nodeapi/routes/post');
+const auth = require('./nodeapi/routes/auth');
 app.use("/", post);
+app.use("/", auth);
 
 
 app.listen(port, () => {

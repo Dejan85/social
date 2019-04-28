@@ -1,8 +1,9 @@
-const Post = require('../../models/post');
+const Post = require('../models/post');
 
 
 exports.getPosts = (req, res) => {
     Post.find()
+        .select("_id title body")
         .then((result) => {
             res.status(200).json({
                 posts: result
