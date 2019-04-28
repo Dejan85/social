@@ -48,3 +48,22 @@ exports.updateUser = (req, res) => {
         });
     });
 };
+
+// delete user 
+exports.deleteUser = (req, res) => {
+    let user = req.profile;
+    user.remove((err, user) => {
+        if (err) {
+            res.status(400).json({
+                err
+            });
+        };
+
+        user.salt = undefined;
+        user.hashed_password = undefined;
+
+        res.json({
+            message: `User deleted successfuly!`
+        });
+    });
+};
