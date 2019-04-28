@@ -36,6 +36,7 @@ app.use(cookieParser());
 app.use(expressValidator());
 
 
+
 //
 // ─── ROUTES ─────────────────────────────────────────────────────────────────────
 //
@@ -44,6 +45,14 @@ const post = require('./nodeapi/routes/post');
 const auth = require('./nodeapi/routes/auth');
 app.use("/", post);
 app.use("/", auth);
+// express jwt (this is must be below route)
+app.use(function (err, req, res, next) {
+    if (err.name === "UnauthorizedError") {
+        res.status(401).json({
+            err: 'Unauthorized!'
+        })
+    }
+})
 
 
 app.listen(port, () => {
