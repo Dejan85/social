@@ -7,6 +7,7 @@ dotenv.config();
 const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
+const cookieParser = require('cookie-parser');
 
 //
 // ─── DB ─────────────────────────────────────────────────────────────────────────
@@ -29,8 +30,11 @@ mongoose.connection.on("error", (err) => {
 app.use(morgan('dev'));
 // body parser
 app.use(bodyParser.json())
+// cookie parser
+app.use(cookieParser());
 // express validator
 app.use(expressValidator());
+
 
 //
 // ─── ROUTES ─────────────────────────────────────────────────────────────────────
