@@ -15,3 +15,10 @@ exports.allUsers = (req, res) => {
             });
         });
 };
+
+// getUser
+exports.getUser = (req, res) => {
+    req.profile.salt = undefined;
+    req.profile.hashed_password = undefined;
+    return res.json(req.profile);
+}
