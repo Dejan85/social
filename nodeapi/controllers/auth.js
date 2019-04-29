@@ -8,7 +8,7 @@ dotenv.config();
 exports.signup = async (req, res) => {
     const userExist = await User.findOne({ email: req.body.email });
     if (userExist) {
-        return res.status(403).json({ err: 'Email is taken!' })
+        return res.status(403).json({ error: 'Email is taken!' })
     };
 
     const user = await new User(req.body);

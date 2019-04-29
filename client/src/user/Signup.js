@@ -8,7 +8,8 @@ class Signup extends Component {
             name: "",
             email: "",
             password: "",
-            error: ""
+            error: "",
+            open: false
         }
     }
 
@@ -55,34 +56,45 @@ class Signup extends Component {
                         error: "",
                         name: "",
                         email: "",
-                        password: ""
-                    })
-                }
+                        password: "",
+                        open: true
+                    });
+                };
             });
     };
 
+    signupForm = (name, email, password) => (
+        <form>
+            <div className="form-group">
+                <label className="text-muted">Name</label>
+                <input className="form-control" type="text" onChange={this.handleChange("name")} value={name} />
+            </div>
+            <div className="form-group">
+                <label className="text-muted">Email</label>
+                <input className="form-control" type="text" onChange={this.handleChange("email")} value={email} />
+            </div>
+            <div className="form-group">
+                <label className="text-muted">Password</label>
+                <input className="form-control" type="password" onChange={this.handleChange("password")} value={password} />
+            </div>
+            <button className="btn btn-raised btn-primary" onClick={this.clickSubmit}>Submit</button>
+        </form>
+    )
 
 
     render() {
-        const { name, email, password } = this.state;
+        const { name, email, password, error, open } = this.state;
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Signup</h2>
-                <form>
-                    <div className="form-group">
-                        <label className="text-muted">Name</label>
-                        <input className="form-control" type="text" onChange={this.handleChange("name")} value={name} />
-                    </div>
-                    <div className="form-group">
-                        <label className="text-muted">Email</label>
-                        <input className="form-control" type="text" onChange={this.handleChange("email")} value={email} />
-                    </div>
-                    <div className="form-group">
-                        <label className="text-muted">Password</label>
-                        <input className="form-control" type="password" onChange={this.handleChange("password")} value={password} />
-                    </div>
-                    <button className="btn btn-raised btn-primary" onClick={this.clickSubmit}>Submit</button>
-                </form>
+                <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
+                    {error}
+                </div>
+                <div className="alert alert-info" style={{ display: open ? "" : "none" }}>
+                    {/* {open} */}
+                    New account is successfuly created. Please Sign In.
+                </div>
+                {this.signupForm(name, email, password)}
             </div>
         )
     };

@@ -11,7 +11,7 @@ const { signup, signin, signout } = require('../controllers/auth');
 const { userById } = require('../halpers');
 
 // route
-router.post('/singup', userSignupValidator, signup);
+router.post('/signup', userSignupValidator, signup);
 router.post('/signin', signin);
 router.get('/signout', signout);
 
