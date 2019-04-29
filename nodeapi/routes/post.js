@@ -11,11 +11,14 @@ const { requireSignin } = require('../authorization');
 const { userById } = require('../halpers');
 
 // controllers
-const { getPosts, createPost } = require('../controllers/post');
+const { getPosts, createPost, postsByUser } = require('../controllers/post');
 
 
 router.get('/', getPosts);
 router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
+router.get('/post/by/:userId', requireSignin, postsByUser);
+
+
 
 // param
 router.param('userId', userById); // any route containing :userId, our app will first execute userById()

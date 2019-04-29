@@ -50,8 +50,18 @@ exports.createPost = (req, res, next) => {
     });
 };
 
-// get all posts
-exports.getAllPosts = (req, res) => {
-    console.log('radi');
-}
+// get all posts by user
+exports.postsByUser = (req, res) => {
+    Post.find({ postedBy: req.profile._id })
+        .populate("postedBy", "_id name")
+        .sort("_created")
+        .exec((err, posts) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            }
+            res.json(posts)
+        });
+};
 
