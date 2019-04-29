@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+// methods
+import { signup } from '../auth'
+
 class Signup extends Component {
     constructor() {
         super()
@@ -13,23 +16,6 @@ class Signup extends Component {
         }
     }
 
-    // register user
-    signup = (user) => {
-        return fetch("http://localhost:8080/signup", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-            .then((res) => {
-                return res.json();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    };
 
     // handle input change
     handleChange = (name) => (e) => {
@@ -45,7 +31,7 @@ class Signup extends Component {
         const user = {
             name, email, password
         };
-        this.signup(user)
+        signup(user)
             .then((data) => {
                 if (data.error) {
                     this.setState({

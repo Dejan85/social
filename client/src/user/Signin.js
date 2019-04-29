@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
+// methods
+import { signin, authenticate } from '../auth/';
+
 class Signin extends Component {
     constructor() {
         super()
@@ -14,31 +17,9 @@ class Signin extends Component {
         };
     };
 
-    // register user
-    signin = (user) => {
-        return fetch("http://localhost:8080/signin", {
-            method: "POST",
-            headers: {
-                Accept: "application/json",
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(user)
-        })
-            .then((res) => {
-                return res.json();
-            })
-            .catch((err) => {
-                console.log(err);
-            })
-    };
 
-    // atuthenticate
-    authenticate = (jwt, next) => {
-        if (typeof window !== undefined) {
-            localStorage.setItem("jwt", JSON.stringify(jwt));
-            next();
-        }
-    };
+
+
 
     // handle input change
     handleChange = (name) => (e) => {
@@ -57,7 +38,7 @@ class Signin extends Component {
         const user = {
             email, password
         };
-        this.signin(user)
+        signin(user)
             .then((data) => {
                 if (data.error) {
                     this.setState({
@@ -66,7 +47,7 @@ class Signin extends Component {
                     });
                 } else {
                     // authenticate
-                    this.authenticate(data, () => {
+                    authenticate(data, () => {
                         this.setState({
                             redirectToReferer: true
                         });
