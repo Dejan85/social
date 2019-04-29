@@ -16,14 +16,14 @@ exports.userById = (req, res, next, id) => {
 
 // post by id
 exports.postById = (req, res, next, id) => {
-    Post.find(id)
+    Post.findById(id)
         .populate("postedBy", "_id name")
         .exec((err, post) => {
             if (err || !post) {
                 res.status(400).json({
                     err
                 });
-            };
+            }
             req.post = post;
             next();
         });

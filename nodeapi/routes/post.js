@@ -5,19 +5,19 @@ const router = express.Router();
 const { createPostValidator } = require('../validator');
 
 // authorization
-const { requireSignin } = require('../authorization');
+const { requireSignin, isPoster } = require('../authorization');
 
 // halpers
 const { userById, postById } = require('../halpers');
 
 // controllers
-const { getPosts, createPost, postsByUser } = require('../controllers/post');
+const { getPosts, createPost, postsByUser, deletePost } = require('../controllers/post');
 
 
 router.get('/', getPosts);
 router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
 router.get('/post/by/:userId', requireSignin, postsByUser);
-
+router.delete('/post/:postId', requireSignin, isPoster, deletePost);
 
 
 // param

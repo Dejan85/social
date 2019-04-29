@@ -65,3 +65,16 @@ exports.postsByUser = (req, res) => {
         });
 };
 
+// delete post
+exports.deletePost = (req, res) => {
+    let post = req.post;
+
+    post.remove((err, post) => {
+        if (err) {
+            res.status(400).json(err);
+        }
+        res.json({
+            message: "Post deleted succesfully!"
+        })
+    });
+};
