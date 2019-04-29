@@ -18,6 +18,27 @@ class Signup extends Component {
         });
     };
 
+    clickSubmit = (e) => {
+        e.preventDefault();
+        const { name, email, password } = this.state;
+        const user = {
+            name, email, password
+        };
+
+        fetch("http://localhost:8080/signup", {
+            method: "POST",
+            headers: {
+                Accept: "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(user)
+        }).then((res) => {
+            return res.json();
+        }).catch((err) => {
+            console.log(err);
+        })
+    };
+
 
     render() {
         const { name, email, password } = this.state;
@@ -37,11 +58,11 @@ class Signup extends Component {
                         <label className="text-muted">Password</label>
                         <input className="form-control" type="password" onChange={this.handleChange("password")} value={password} />
                     </div>
-                    <button className="btn btn-raised btn-primary">Submit</button>
+                    <button className="btn btn-raised btn-primary" onClick={this.clickSubmit}>Submit</button>
                 </form>
             </div>
         )
-    }
-}
+    };
+};
 
 export default Signup;
