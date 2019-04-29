@@ -9,7 +9,8 @@ class Signin extends Component {
             email: "",
             password: "",
             error: "",
-            redirectToReferer: false
+            redirectToReferer: false,
+            loading: false
         };
     };
 
@@ -49,6 +50,9 @@ class Signin extends Component {
     // submit 
     clickSubmit = (e) => {
         e.preventDefault();
+        this.setState({
+            loading: true
+        });
         const { email, password } = this.state;
         const user = {
             email, password
@@ -57,7 +61,8 @@ class Signin extends Component {
             .then((data) => {
                 if (data.error) {
                     this.setState({
-                        error: data.error
+                        error: data.error,
+                        loading: false
                     });
                 } else {
                     // authenticate
@@ -86,7 +91,7 @@ class Signin extends Component {
 
 
     render() {
-        const { email, password, error, redirectToReferer } = this.state;
+        const { email, password, error, redirectToReferer, loading } = this.state;
 
         if (redirectToReferer) {
             return <Redirect to="/" />
@@ -98,6 +103,7 @@ class Signin extends Component {
                 <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
                     {error}
                 </div>
+                {loading ? <div className="jumbotron text-center"><h2>Loading...</h2></div> : ""}
                 {this.signinForm(email, password)}
             </div>
         )
