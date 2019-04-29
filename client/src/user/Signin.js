@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
 
 class Signin extends Component {
     constructor() {
@@ -30,6 +31,14 @@ class Signin extends Component {
             })
     };
 
+    // atuthenticate
+    authenticate = (jwt, next) => {
+        if (typeof window !== undefined) {
+            localStorage.setItem("jwt", JSON.stringify(jwt));
+            next();
+        }
+    };
+
     // handle input change
     handleChange = (name) => (e) => {
         this.setState({
@@ -52,7 +61,11 @@ class Signin extends Component {
                     });
                 } else {
                     // authenticate
-                    // redirect
+                    this.authenticate(data, () => {
+                        this.setState({
+                            redirectToReferer: true
+                        });
+                    });
                 };
             });
     };
@@ -73,16 +86,17 @@ class Signin extends Component {
 
 
     render() {
-        const { email, password, error, open } = this.state;
+        const { email, password, error, redirectToReferer } = this.state;
+
+        if (redirectToReferer) {
+            return <Redirect to="/" />
+        }
+
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Signup</h2>
                 <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
                     {error}
-                </div>
-                <div className="alert alert-info" style={{ display: open ? "" : "none" }}>
-                    {/* {open} */}
-                    New account is successfuly created. Please Sign In.
                 </div>
                 {this.signinForm(email, password)}
             </div>
