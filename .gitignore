@@ -1,3 +1,2 @@
 /node_modules
-.env.MONGO_URI
-.env.PORT
+.env

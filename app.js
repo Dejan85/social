@@ -8,6 +8,8 @@ const mongoose = require('mongoose');
 const bodyParser = require('body-parser');
 const expressValidator = require('express-validator');
 const cookieParser = require('cookie-parser');
+const fs = require('fs');
+const cors = require('cors');
 
 //
 // ─── DB ─────────────────────────────────────────────────────────────────────────
@@ -34,6 +36,8 @@ app.use(bodyParser.json())
 app.use(cookieParser());
 // express validator
 app.use(expressValidator());
+//cors
+app.use(cors());
 
 
 
@@ -58,6 +62,18 @@ app.use(function (err, req, res, next) {
 })
 
 
+// api docs
+app.get("/api", (req, res) => {
+    fs.readFile("docs/apiDocs.json", (err, data) => {
+        if (err) {
+            res.status(400).json({
+                error: err
+            });
+        }
+        const docs = JSON.parse(data);
+        res.json(docs);
+    });
+})
 //
 // ─── SERVER ─────────────────────────────────────────────────────────────────────
 //

@@ -14,7 +14,7 @@ const { userById, postById } = require('../halpers');
 const { getPosts, createPost, postsByUser, deletePost, updatePost } = require('../controllers/post');
 
 
-router.get('/', getPosts);
+router.get('/posts', getPosts);
 router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
 router.get('/post/by/:userId', requireSignin, postsByUser);
 router.put('/post/:postId', requireSignin, isPoster, updatePost);
