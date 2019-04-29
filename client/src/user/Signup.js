@@ -14,7 +14,7 @@ class Signup extends Component {
 
     // register user
     signup = (user) => {
-        fetch("http://localhost:8080/signup", {
+        return fetch("http://localhost:8080/signup", {
             method: "POST",
             headers: {
                 Accept: "application/json",
@@ -44,7 +44,21 @@ class Signup extends Component {
         const user = {
             name, email, password
         };
-        this.signup(user);
+        this.signup(user)
+            .then((data) => {
+                if (data.error) {
+                    this.setState({
+                        error: data.error
+                    });
+                } else {
+                    this.setState({
+                        error: "",
+                        name: "",
+                        email: "",
+                        password: ""
+                    })
+                }
+            });
     };
 
 
