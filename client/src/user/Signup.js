@@ -12,19 +12,8 @@ class Signup extends Component {
         }
     }
 
-    handleChange = (name) => (e) => {
-        this.setState({
-            [name]: e.target.value
-        });
-    };
-
-    clickSubmit = (e) => {
-        e.preventDefault();
-        const { name, email, password } = this.state;
-        const user = {
-            name, email, password
-        };
-
+    // register user
+    signup = (user) => {
         fetch("http://localhost:8080/signup", {
             method: "POST",
             headers: {
@@ -32,12 +21,32 @@ class Signup extends Component {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify(user)
-        }).then((res) => {
-            return res.json();
-        }).catch((err) => {
-            console.log(err);
         })
+            .then((res) => {
+                return res.json();
+            })
+            .catch((err) => {
+                console.log(err);
+            })
     };
+
+    // handle input change
+    handleChange = (name) => (e) => {
+        this.setState({
+            [name]: e.target.value
+        });
+    };
+
+    // submit 
+    clickSubmit = (e) => {
+        e.preventDefault();
+        const { name, email, password } = this.state;
+        const user = {
+            name, email, password
+        };
+        this.signup(user);
+    };
+
 
 
     render() {
