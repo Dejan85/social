@@ -33,7 +33,6 @@ export const isAuthenticated = () => {
 };
 
 const Menu = ({ history }) => {
-    console.log(isAuthenticated());
     return (
         <div>
             <ul className="nav nav-tabs bg-primary">
@@ -64,6 +63,14 @@ const Menu = ({ history }) => {
                                     history.push('/')
                                 })}
                             >Signout</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link
+                                className="nav-link"
+                                to="#"
+                            >
+                                {isAuthenticated().user.name}
+                            </Link>
                         </li>
                     </>
                 )}
