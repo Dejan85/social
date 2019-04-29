@@ -1,6 +1,8 @@
 const Post = require('../models/post');
 const formidable = require('formidable');
 const fs = require('fs');
+const _ = require('lodash');
+
 
 // get all posts
 exports.getPosts = (req, res) => {
@@ -63,6 +65,19 @@ exports.postsByUser = (req, res) => {
             }
             res.json(posts)
         });
+};
+
+// edit post
+exports.updatePost = (req, res, next) => {
+    let post = req.post;
+    post = _.extend(post, req.body);
+    post.updated = Date.now();
+    post.save((err) => {
+        if (err) {
+            return res.status(400).json(err)
+        }
+        res.json(post);
+    });
 };
 
 // delete post

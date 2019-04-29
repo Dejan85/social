@@ -11,12 +11,13 @@ const { requireSignin, isPoster } = require('../authorization');
 const { userById, postById } = require('../halpers');
 
 // controllers
-const { getPosts, createPost, postsByUser, deletePost } = require('../controllers/post');
+const { getPosts, createPost, postsByUser, deletePost, updatePost } = require('../controllers/post');
 
 
 router.get('/', getPosts);
 router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
 router.get('/post/by/:userId', requireSignin, postsByUser);
+router.put('/post/:postId', requireSignin, isPoster, updatePost);
 router.delete('/post/:postId', requireSignin, isPoster, deletePost);
 
 
