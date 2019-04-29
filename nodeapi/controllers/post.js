@@ -44,19 +44,5 @@ exports.createPost = (req, res, next) => {
 
     });
 
-
-
-
-    const post = new Post(req.body);
-
-    post.save()
-        .then((result) => {
-            res.status(200).json({
-                post: result
-            })
-        })
-        .catch((err) => {
-            console.log(err);
-        })
-}
+};
 

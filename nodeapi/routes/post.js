@@ -7,11 +7,17 @@ const { createPostValidator } = require('../validator');
 // authorization
 const { requireSignin } = require('../authorization');
 
+// halpers
+const { userById } = require('../halpers');
+
 // controllers
 const { getPosts, createPost } = require('../controllers/post');
 
-router.get('/', getPosts);
-router.post('/post', requireSignin, createPostValidator, createPost);
 
+router.get('/', getPosts);
+router.post('/post/new/:userId', requireSignin, createPost, createPostValidator);
+
+// param
+router.param('userId', userById); // any route containing :userId, our app will first execute userById()
 
 module.exports = router;
