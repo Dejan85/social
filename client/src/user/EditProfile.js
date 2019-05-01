@@ -42,6 +42,7 @@ class EditProfile extends Component {
 
 
     componentDidMount() {
+        this.userData = new FormData();
         const userId = this.props.match.params.userId;
         this.init(userId)
     };
@@ -75,8 +76,10 @@ class EditProfile extends Component {
 
     // handle input change
     handleChange = (name) => (e) => {
+        const value = name === "photo" ? e.target.files[0] : e.target.value
+        this.userData.set(name, value);
         this.setState({
-            [name]: e.target.value
+            [name]: value
         });
     };
 
@@ -85,14 +88,14 @@ class EditProfile extends Component {
         e.preventDefault();
 
         if (this.isValid()) {
-            const { name, email, password } = this.state;
-            const user = {
-                name, email, password
-            };
+            // const { name, email, password } = this.state;
+            // const user = {
+            //     name, email, password
+            // };
             const userId = this.props.match.params.userId;
             const token = isAuthenticated().token;
 
-            update(userId, token, user)
+            update(userId, token, this.userData)
                 .then((data) => {
                     if (data.error) {
                         this.setState({
@@ -109,6 +112,10 @@ class EditProfile extends Component {
 
     signupForm = (name, email, password) => (
         <form>
+            <div className="form-group">
+                <label className="text-muted">Profile Photo</label>
+                <input className="form-control" type="file" accept="image/*" onChange={this.handleChange("photo")} />
+            </div>
             <div className="form-group">
                 <label className="text-muted">Name</label>
                 <input className="form-control" type="text" onChange={this.handleChange("name")} value={name} />
