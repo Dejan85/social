@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { list } from '../user/apiUser';
+import { Link } from 'react-router-dom';
 
 class Users extends Component {
     constructor() {
@@ -23,6 +24,21 @@ class Users extends Component {
             })
     };
 
+    renderUsers = (users) =>
+        (<div className="row">
+            {users.map((user, index) => {
+                return <div className="card col-md-4" key={index}>
+                    <img className="card-img-top" src="#" alt="Card cap" />
+                    <div className="card-body">
+                        <h5 className="card-title">{user.name}</h5>
+                        <p className="card-text">{user.email}</p>
+                        <Link to="#" className="btn btn-raised btn-primary btn-small">View Profile</Link>
+                    </div>
+                </div>
+            })}
+        </div>)
+
+
     render() {
         const { users } = this.state;
         return (
@@ -30,11 +46,7 @@ class Users extends Component {
                 <h2 className="mt-5 mb-5">
                     User
                 </h2>
-                <div className="card">
-                    {users.map((user, index) => {
-                        return <p key={index}>{user.name}</p>
-                    })}
-                </div>
+                {this.renderUsers(users)}
             </div>
         );
     };
