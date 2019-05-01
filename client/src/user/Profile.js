@@ -71,7 +71,7 @@ class Profile extends Component {
                                 <Link className="btn btn-raised btn-success mr-5" to={`/user/edit/${isAuthenticated().user._id}`}>
                                     Edit Profile
                                 </Link>
-                                <DeleteUser />
+                                <DeleteUser userId={user._id} />
                             </div>
                         )}
                     </div >
