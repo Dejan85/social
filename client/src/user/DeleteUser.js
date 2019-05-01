@@ -7,15 +7,27 @@ class DeleteUser extends Component {
 
         this.state = {
             xad: ""
-        }
+        };
     };
+
+    deleteAccount = () => {
+        console.log("Delete accout");
+    }
+
+    deleteConfirmed = () => {
+        let answer = window.confirm("Are you sure want to delete your account?")
+        if (answer) {
+            this.deleteAccount();
+        }
+    }
+
     render() {
         return (
-            <button className="btn btn-raised btn-danger">
+            <button onClick={this.deleteConfirmed} className="btn btn-raised btn-danger">
                 Delete Profile
             </button>
         )
-    }
-}
+    };
+};
 
 export default DeleteUser;
