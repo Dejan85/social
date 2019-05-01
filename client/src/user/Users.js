@@ -37,7 +37,7 @@ class Users extends Component {
                     <div className="card-body">
                         <h5 className="card-title">{user.name}</h5>
                         <p className="card-text">{user.email}</p>
-                        <Link to={`/users/${user._id}`} className="btn btn-raised btn-primary btn-small">View Profile</Link>
+                        <Link to={`/user/${user._id}`} className="btn btn-raised btn-primary btn-small">View Profile</Link>
                     </div>
                 </div>
             })}
