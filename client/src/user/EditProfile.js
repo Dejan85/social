@@ -16,7 +16,8 @@ class EditProfile extends Component {
             email: "",
             password: "",
             redirectToProfile: false,
-            error: ""
+            error: "",
+            loading: false
         };
     };
 
@@ -87,6 +88,10 @@ class EditProfile extends Component {
     clickSubmit = (e) => {
         e.preventDefault();
 
+        this.setState({
+            loading: true
+        });
+
         if (this.isValid()) {
             // const { name, email, password } = this.state;
             // const user = {
@@ -133,7 +138,7 @@ class EditProfile extends Component {
     )
 
     render() {
-        const { id, name, email, password, redirectToProfile, error } = this.state;
+        const { id, name, email, password, redirectToProfile, error, loading } = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`} />
@@ -145,6 +150,7 @@ class EditProfile extends Component {
                 <div className="alert alert-danger" style={{ display: error ? "" : "none" }}>
                     {error}
                 </div>
+                {loading ? <div className="jumbotron text-center"><h2>Loading...</h2></div> : ""}
                 {this.signupForm(name, email, password)}
             </div>
         );
