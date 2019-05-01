@@ -5,7 +5,9 @@ const router = express();
 const { userById } = require('../halpers');
 
 // authorization
-const { requireSignin } = require('../authorization')
+const { requireSignin, hasAuthorization } = require('../authorization')
+
+// validator
 
 // controllers
 const { allUsers, getUser, updateUser, deleteUser } = require('../controllers/user');

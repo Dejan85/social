@@ -17,7 +17,8 @@ exports.hasAuthorization = (req, res, next) => {
         return res.status(403).json({
             error: "User is not aothorized to perform this action"
         });
-    }
+    };
+    next();
 };
 
 // is poster
