@@ -2,6 +2,9 @@ import React, { Component } from 'react';
 import { isAuthenticated } from '../auth';
 import { Redirect } from 'react-router-dom';
 
+// methods
+import { read } from '../user/apiUser';
+
 class Profile extends Component {
     constructor() {
         super()
@@ -14,18 +17,9 @@ class Profile extends Component {
 
 
 
-    componentDidMount() {
-        const userId = this.props.match.params.userId;
-        fetch(`http://localhost:8080/user/${userId}`, {
-            headers: {
-                method: "GET",
-                "Content-Type": "application/json",
-                Authorization: `Bearer ${isAuthenticated().token}`
-            }
-        })
-            .then((response) => {
-                return response.json();
-            })
+    init = (userId) => {
+        const token = isAuthenticated().token;
+        read(userId, token)
             .then((data) => {
                 if (data.error) {
                     this.setState({ redirectToSignin: true });
@@ -38,6 +32,12 @@ class Profile extends Component {
             .catch((err) => {
                 console.log(err);
             })
+    }
+
+
+    componentDidMount() {
+        const userId = this.props.match.params.userId;
+        this.init(userId)
     };
 
     render() {
