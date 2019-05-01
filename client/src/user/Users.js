@@ -1,6 +1,28 @@
 import React, { Component } from 'react';
+import { list } from '../user/apiUser';
 
 class Users extends Component {
+    constructor() {
+        super()
+
+        this.state = {
+            users: []
+        }
+    };
+
+    componentDidMount() {
+        list()
+            .then((data) => {
+                if (data.error) {
+                    console.log(data.error);
+                } else {
+                    this.setState({
+                        users: data
+                    });
+                }
+            })
+    };
+
     render() {
         return (
             <div className="container">
@@ -8,8 +30,8 @@ class Users extends Component {
                     User
                 </h2>
             </div>
-        )
-    }
-}
+        );
+    };
+};
 
 export default Users;
