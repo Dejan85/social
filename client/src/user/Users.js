@@ -24,11 +24,17 @@ class Users extends Component {
     };
 
     render() {
+        const { users } = this.state;
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">
                     User
                 </h2>
+                <div className="card">
+                    {users.map((user, index) => {
+                        return <p key={index}>{user.name}</p>
+                    })}
+                </div>
             </div>
         );
     };

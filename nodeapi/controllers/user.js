@@ -12,9 +12,7 @@ exports.allUsers = (req, res) => {
                     err
                 });
             };
-            res.json({
-                users
-            });
+            res.json(users);
         });
 };
 
