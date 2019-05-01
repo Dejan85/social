@@ -4,6 +4,10 @@ import { Redirect, Link } from 'react-router-dom';
 import imagesProfile from '../images/avatar.jpg'
 
 
+// components
+import DeleteUser from './DeleteUser';
+
+
 // methods
 import { read } from '../user/apiUser';
 
@@ -62,9 +66,7 @@ class Profile extends Component {
                                 <Link className="btn btn-raised btn-success mr-5" to={`/user/edit/${isAuthenticated().user._id}`}>
                                     Edit Profile
                                 </Link>
-                                <button className="btn btn-raised btn-danger">
-                                    Delete Profile
-                                </button>
+                                <DeleteUser />
                             </div>
                         )}
                     </div >
