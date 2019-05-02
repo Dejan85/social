@@ -117,11 +117,44 @@ exports.addFollower = (req, res) => {
                     error: err
                 });
             };
+            result.hashed_password = undefined;
+            result.salt = undefined;
+            res.json(result);
         })
-
-    result.hashed_password = undefined;
-    result.salt = undefined;
-    res.json(result);
 };
 
 
+// unfolowing
+
+exports.removeFollowing = (req, res) => {
+    User.findByIdAndUpdate(
+        req.body.userId,
+        { $pull: { following: req.body.unfollowId } },
+        (err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            }
+            next();
+        });
+};
+
+exports.removeFollower = (req, res) => {
+    User.findByIdAndUpdate(
+        req.body.unfolowId,
+        { $pull: { followers: req.body.userId } },
+        { new: true })
+        .populate('following', '_id name')
+        .populate('followers', '_id name')
+        .exec((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            };
+            result.hashed_password = undefined;
+            result.salt = undefined;
+            res.json(result);
+        })
+};

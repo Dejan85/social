@@ -10,7 +10,17 @@ const { requireSignin } = require('../authorization')
 // validator
 
 // controllers
-const { allUsers, getUser, updateUser, deleteUser, userPhoto, addFollowing, addFollower } = require('../controllers/user');
+const {
+    allUsers,
+    getUser,
+    updateUser,
+    deleteUser,
+    userPhoto,
+    addFollowing,
+    addFollower,
+    removeFollowing,
+    removeFollower
+} = require('../controllers/user');
 
 // route
 router.get('/users', allUsers);
@@ -21,6 +31,9 @@ router.delete('/user/:userId', requireSignin, deleteUser);
 router.get("/user/photo/:userId", userPhoto);
 // folowers and folowing
 router.put('/user/follow', requireSignin, addFollowing, addFollower);
+// unfolowing
+router.put('/user/unfollow', requireSignin, removeFollowing, removeFollower);
+
 
 // param
 router.param('userId', userById); // any route containing :userId, our app will first execute userById()
