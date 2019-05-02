@@ -76,6 +76,7 @@ class EditProfile extends Component {
             return false;
         };
 
+
         if (password.length >= 1 && password.length <= 5) {
             this.setState({
                 error: "Password must be at least 6 characters long"

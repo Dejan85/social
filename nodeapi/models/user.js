@@ -31,7 +31,12 @@ const userSchema = new mongoose.Schema({
     about: {
         type: String,
         trim: true
-    }
+    },
+    following: [
+        {
+            type: mongoose.Schema.ObjectId
+        }
+    ]
 });
 
 /**
