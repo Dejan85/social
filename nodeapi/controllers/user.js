@@ -60,6 +60,16 @@ exports.updateUser = (req, res, next) => {
     });
 };
 
+// user photo
+exports.userPhoto = (req, res, next) => {
+    console.log('radi');
+    if (req.profile.photo.data) {
+        res.set(("Content-Type", req.profile.photo.contentType));
+        return res.send(req.profile.photo.data);
+    }
+    next();
+};
+
 // delete user 
 exports.deleteUser = (req, res) => {
     let user = req.profile;
