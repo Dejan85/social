@@ -4,7 +4,7 @@ import avatar from "../images/avatar.jpg";
 
 // methods
 import { isAuthenticated } from '../auth';
-import { read, update } from './apiUser';
+import { read, update, updateUser } from './apiUser';
 
 
 class EditProfile extends Component {
@@ -120,9 +120,12 @@ class EditProfile extends Component {
                             error: data.error
                         });
                     } else {
-                        this.setState({
-                            redirectToProfile: true
+                        updateUser(data, () => {
+                            this.setState({
+                                redirectToProfile: true
+                            });
                         });
+
                     };
                 });
         };
