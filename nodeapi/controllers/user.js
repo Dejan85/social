@@ -1,5 +1,7 @@
 const User = require('../models/user');
 const _ = require('lodash');
+const formidable = require('formidable');
+const fs = require('fs');
 
 
 // get all users
@@ -24,22 +26,54 @@ exports.getUser = (req, res) => {
 };
 
 // edit user
-exports.updateUser = (req, res) => {
-    let user = req.profile;
-    user = _.extend(user, req.body); // extend - mutate the source object
-    user.updated = Date.now();
-    user.save((err) => {
+exports.updateUser = (req, res, next) => {
+    // let user = req.profile;
+    // user = _.extend(user, req.body); // extend - mutate the source object
+    // user.updated = Date.now();
+    // user.save((err) => {
+    //     if (err) {
+    //         return res.status(400).json({
+    //             error: "You are not authorized to preform this action"
+    //         });
+    //     };
+
+    //     user.salt = undefined;
+    //     user.hashed_password = undefined;
+
+    //     res.json({
+    //         user
+    //     });
+    // });
+
+    let form = formidable.IncomingForm();
+    form.keepExtensions = true;
+    form.parse(req, (err, fields, files) => {
         if (err) {
             return res.status(400).json({
-                error: "You are not authorized to preform this action"
+                error: "Photo could not be uploaded"
             });
-        };
+        }
 
-        user.salt = undefined;
-        user.hashed_password = undefined;
+        // save user
+        let user = req.profile;
+        user = _.extend(user, fields);
+        user.updated = Date.now();
 
-        res.json({
-            user
+        if (files.photo) {
+            user.photo.data = fs.readFileSync(files.photo.path);
+            user.photo.contentType = files.photo.type;
+        }
+
+        user.save((err, result) => {
+            if (err) {
+                return res.status(400).json({
+                    error: err
+                });
+            }
+
+            user.hashed_password = undefined;
+            user.salt = undefined;
+            res.json(user);
         });
     });
 };
