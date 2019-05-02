@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import avatar from "../images/avatar.jpg";
 
 // methods
 import { isAuthenticated } from '../auth';
@@ -107,10 +108,6 @@ class EditProfile extends Component {
         });
 
         if (this.isValid()) {
-            // const { name, email, password } = this.state;
-            // const user = {
-            //     name, email, password
-            // };
             const userId = this.props.match.params.userId;
             const token = isAuthenticated().token;
 
@@ -158,6 +155,8 @@ class EditProfile extends Component {
             return <Redirect to={`/user/${id}`} />
         }
 
+        const photoUrl = id ? `http://localhost:8080/user/photo/${id}` : avatar;
+
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Edit profile</h2>
@@ -165,6 +164,7 @@ class EditProfile extends Component {
                     {error}
                 </div>
                 {loading ? <div className="jumbotron text-center"><h2>Loading...</h2></div> : ""}
+                <img src={photoUrl} alt={name} />
                 {this.signupForm(name, email, password)}
             </div>
         );
