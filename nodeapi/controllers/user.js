@@ -27,24 +27,6 @@ exports.getUser = (req, res) => {
 
 // edit user
 exports.updateUser = (req, res, next) => {
-    // let user = req.profile;
-    // user = _.extend(user, req.body); // extend - mutate the source object
-    // user.updated = Date.now();
-    // user.save((err) => {
-    //     if (err) {
-    //         return res.status(400).json({
-    //             error: "You are not authorized to preform this action"
-    //         });
-    //     };
-
-    //     user.salt = undefined;
-    //     user.hashed_password = undefined;
-
-    //     res.json({
-    //         user
-    //     });
-    // });
-
     let form = formidable.IncomingForm();
     form.keepExtensions = true;
     form.parse(req, (err, fields, files) => {

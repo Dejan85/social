@@ -17,7 +17,8 @@ class EditProfile extends Component {
             password: "",
             redirectToProfile: false,
             error: "",
-            loading: false
+            loading: false,
+            fileSize: 0
         };
     };
 
@@ -49,7 +50,14 @@ class EditProfile extends Component {
     };
 
     isValid = () => {
-        const { name, email, password } = this.state;
+        const { name, email, password, fileSize } = this.state;
+
+        if (fileSize > 100000) {
+            this.setState({
+                error: "File size should be less then 100kb"
+            })
+            return false;
+        };
 
         if (name.length === 0) {
             this.setState({
@@ -77,10 +85,16 @@ class EditProfile extends Component {
 
     // handle input change
     handleChange = (name) => (e) => {
-        const value = name === "photo" ? e.target.files[0] : e.target.value
+        this.setState({
+            error: "",
+            loading: false
+        });
+
+        const value = name === "photo" ? e.target.files[0] : e.target.value;
+        const fileSize = name === "photo" ? e.target.files[0].size : 0;
         this.userData.set(name, value);
         this.setState({
-            [name]: value
+            [name]: value, fileSize
         });
     };
 
