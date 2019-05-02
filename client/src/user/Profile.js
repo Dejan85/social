@@ -6,7 +6,7 @@ import avatar from '../images/avatar.jpg'
 
 // components
 import DeleteUser from './DeleteUser';
-
+import FolowProfileButton from './FolowProfileButton';
 
 // methods
 import { read } from '../user/apiUser';
@@ -69,14 +69,14 @@ class Profile extends Component {
                             <p>Email: {user.email}</p>
                             <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
                         </div>
-                        {isAuthenticated().user && isAuthenticated().user._id === user._id && (
+                        {isAuthenticated().user && isAuthenticated().user._id === user._id ? (
                             <div className="d-inline-block">
                                 <Link className="btn btn-raised btn-success mr-5" to={`/user/edit/${isAuthenticated().user._id}`}>
                                     Edit Profile
                                 </Link>
                                 <DeleteUser userId={user._id} />
                             </div>
-                        )}
+                        ) : (<FolowProfileButton />)}
                     </div >
                 </div>
 
