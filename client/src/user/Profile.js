@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { isAuthenticated } from '../auth';
 import { Redirect, Link } from 'react-router-dom';
-import imagesProfile from '../images/avatar.jpg'
+import avatar from '../images/avatar.jpg'
 
 
 // components
@@ -53,12 +53,16 @@ class Profile extends Component {
         const { redirectToSignin, user } = this.state;
 
         if (redirectToSignin) return <Redirect to="signin" />
+
+        const photoUrl = user._id ? `http://localhost:8080/user/photo/${user._id}?${new Date().getTime()}` : avatar;
+
+
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Profile</h2>
                 <div className="row">
                     <div className="col-md-6">
-                        <img className="card-img-top" src={imagesProfile} alt="Card cap" style={{ width: "100%", height: "15vw", objectFit: "cover" }} />
+                        <img src={photoUrl} alt={user.name} style={{ height: "200px", width: "auto" }} className="img-thumbnail" />
                     </div>
                     <div className="col-md-6">
                         <div className="lead mt-2">

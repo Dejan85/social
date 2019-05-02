@@ -155,7 +155,7 @@ class EditProfile extends Component {
             return <Redirect to={`/user/${id}`} />
         }
 
-        const photoUrl = id ? `http://localhost:8080/user/photo/${id}` : avatar;
+        const photoUrl = id ? `http://localhost:8080/user/photo/${id}?${new Date().getTime()}` : avatar;
 
         return (
             <div className="container">
@@ -164,7 +164,7 @@ class EditProfile extends Component {
                     {error}
                 </div>
                 {loading ? <div className="jumbotron text-center"><h2>Loading...</h2></div> : ""}
-                <img src={photoUrl} alt={name} />
+                <img src={photoUrl} alt={name} style={{ height: "200px", width: "auto" }} className="img-thumbnail" />
                 {this.signupForm(name, email, password)}
             </div>
         );
