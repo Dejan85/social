@@ -56,7 +56,6 @@ class Profile extends Component {
 
         const photoUrl = user._id ? `http://localhost:8080/user/photo/${user._id}?${new Date().getTime()}` : avatar;
 
-
         return (
             <div className="container">
                 <h2 className="mt-5 mb-5">Profile</h2>
@@ -80,6 +79,16 @@ class Profile extends Component {
                         )}
                     </div >
                 </div>
+
+                <div className="row">
+                    <div className="col md-12 mt-5 mb-5">
+                        <hr />
+                        <p className="lead">
+                            {user.about}
+                        </p>
+                    </div>
+                </div>
+
             </div>
         );
     };

@@ -19,7 +19,8 @@ class EditProfile extends Component {
             redirectToProfile: false,
             error: "",
             loading: false,
-            fileSize: 0
+            fileSize: 0,
+            about: "",
         };
     };
 
@@ -34,7 +35,8 @@ class EditProfile extends Component {
                         id: data._id,
                         name: data.name,
                         email: data.email,
-                        error: ""
+                        error: "",
+                        about: data.about,
                     });
                 }
             })
@@ -126,7 +128,7 @@ class EditProfile extends Component {
         };
     };
 
-    signupForm = (name, email, password) => (
+    signupForm = (name, email, password, about) => (
         <form>
             <div className="form-group">
                 <label className="text-muted">Profile Photo</label>
@@ -141,6 +143,10 @@ class EditProfile extends Component {
                 <input className="form-control" type="text" onChange={this.handleChange("email")} value={email} />
             </div>
             <div className="form-group">
+                <label className="text-muted">About</label>
+                <textarea className="form-control" type="text" onChange={this.handleChange("about")} value={about} />
+            </div>
+            <div className="form-group">
                 <label className="text-muted">Password</label>
                 <input className="form-control" type="password" onChange={this.handleChange("password")} value={password} />
             </div>
@@ -149,7 +155,7 @@ class EditProfile extends Component {
     )
 
     render() {
-        const { id, name, email, password, redirectToProfile, error, loading } = this.state;
+        const { id, name, email, password, redirectToProfile, error, loading, about } = this.state;
 
         if (redirectToProfile) {
             return <Redirect to={`/user/${id}`} />
@@ -165,7 +171,7 @@ class EditProfile extends Component {
                 </div>
                 {loading ? <div className="jumbotron text-center"><h2>Loading...</h2></div> : ""}
                 <img src={photoUrl} alt={name} style={{ height: "200px", width: "auto" }} className="img-thumbnail" />
-                {this.signupForm(name, email, password)}
+                {this.signupForm(name, email, password, about)}
             </div>
         );
     };
