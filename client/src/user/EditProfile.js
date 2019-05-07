@@ -1,25 +1,25 @@
-import React, { Component } from "react";
-import { Redirect } from "react-router-dom";
-import avatar from "../images/avatar.jpg";
+import React, { Component } from 'react';
+import { Redirect } from 'react-router-dom';
+import avatar from '../images/avatar.jpg';
 
 // methods
-import { isAuthenticated } from "../auth";
-import { read, update, updateUser } from "./apiUser";
+import { isAuthenticated } from '../auth';
+import { read, update, updateUser } from './apiUser';
 
 class EditProfile extends Component {
   constructor() {
     super();
 
     this.state = {
-      id: "",
-      name: "",
-      email: "",
-      password: "",
+      id: '',
+      name: '',
+      email: '',
+      password: '',
       redirectToProfile: false,
-      error: "",
+      error: '',
       loading: false,
       fileSize: 0,
-      about: ""
+      about: ''
     };
   }
 
@@ -34,7 +34,7 @@ class EditProfile extends Component {
             id: data._id,
             name: data.name,
             email: data.email,
-            error: "",
+            error: '',
             about: data.about
           });
         }
@@ -53,30 +53,30 @@ class EditProfile extends Component {
   isValid = () => {
     const { name, email, password, fileSize } = this.state;
 
-    if (fileSize > 200000) {
+    if (fileSize > 100000) {
       this.setState({
-        error: "File size should be less then 200kb"
+        error: 'File size should be less then 100kb'
       });
       return false;
     }
 
     if (name.length === 0) {
       this.setState({
-        error: "Name is required"
+        error: 'Name is required'
       });
       return false;
     }
 
     if (!/^\w+([.-]?\w+)*@\w([.-]?\w+)*(\.\w{2,3})+$/.test(email)) {
       this.setState({
-        error: "A valid email is required"
+        error: 'A valid email is required'
       });
       return false;
     }
 
     if (password.length >= 1 && password.length <= 5) {
       this.setState({
-        error: "Password must be at least 6 characters long"
+        error: 'Password must be at least 6 characters long'
       });
       return false;
     }
@@ -86,12 +86,12 @@ class EditProfile extends Component {
   // handle input change
   handleChange = name => e => {
     this.setState({
-      error: "",
+      error: '',
       loading: false
     });
 
-    const value = name === "photo" ? e.target.files[0] : e.target.value;
-    const fileSize = name === "photo" ? e.target.files[0].size : 0;
+    const value = name === 'photo' ? e.target.files[0] : e.target.value;
+    const fileSize = name === 'photo' ? e.target.files[0].size : 0;
     this.userData.set(name, value);
     this.setState({
       [name]: value,
@@ -129,52 +129,52 @@ class EditProfile extends Component {
 
   signupForm = (name, email, password, about) => (
     <form>
-      <div className="form-group">
-        <label className="text-muted">Profile Photo</label>
+      <div className='form-group'>
+        <label className='text-muted'>Profile Photo</label>
         <input
-          className="form-control"
-          type="file"
-          accept="image/*"
-          onChange={this.handleChange("photo")}
+          className='form-control'
+          type='file'
+          accept='image/*'
+          onChange={this.handleChange('photo')}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Name</label>
+      <div className='form-group'>
+        <label className='text-muted'>Name</label>
         <input
-          className="form-control"
-          type="text"
-          onChange={this.handleChange("name")}
+          className='form-control'
+          type='text'
+          onChange={this.handleChange('name')}
           value={name}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Email</label>
+      <div className='form-group'>
+        <label className='text-muted'>Email</label>
         <input
-          className="form-control"
-          type="text"
-          onChange={this.handleChange("email")}
+          className='form-control'
+          type='text'
+          onChange={this.handleChange('email')}
           value={email}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">About</label>
+      <div className='form-group'>
+        <label className='text-muted'>About</label>
         <textarea
-          className="form-control"
-          type="text"
-          onChange={this.handleChange("about")}
+          className='form-control'
+          type='text'
+          onChange={this.handleChange('about')}
           value={about}
         />
       </div>
-      <div className="form-group">
-        <label className="text-muted">Password</label>
+      <div className='form-group'>
+        <label className='text-muted'>Password</label>
         <input
-          className="form-control"
-          type="password"
-          onChange={this.handleChange("password")}
+          className='form-control'
+          type='password'
+          onChange={this.handleChange('password')}
           value={password}
         />
       </div>
-      <button className="btn btn-raised btn-primary" onClick={this.clickSubmit}>
+      <button className='btn btn-raised btn-primary' onClick={this.clickSubmit}>
         Update
       </button>
     </form>
@@ -201,26 +201,26 @@ class EditProfile extends Component {
       : avatar;
 
     return (
-      <div className="container">
-        <h2 className="mt-5 mb-5">Edit profile</h2>
+      <div className='container'>
+        <h2 className='mt-5 mb-5'>Edit profile</h2>
         <div
-          className="alert alert-danger"
-          style={{ display: error ? "" : "none" }}
+          className='alert alert-danger'
+          style={{ display: error ? '' : 'none' }}
         >
           {error}
         </div>
         {loading ? (
-          <div className="jumbotron text-center">
+          <div className='jumbotron text-center'>
             <h2>Loading...</h2>
           </div>
         ) : (
-          ""
+          ''
         )}
         <img
           src={photoUrl}
           alt={name}
-          style={{ height: "200px", width: "auto" }}
-          className="img-thumbnail"
+          style={{ height: '200px', width: 'auto' }}
+          className='img-thumbnail'
         />
         {this.signupForm(name, email, password, about)}
       </div>

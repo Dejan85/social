@@ -1,14 +1,14 @@
-import React, { Component } from "react";
-import { isAuthenticated } from "../auth";
-import { Redirect, Link } from "react-router-dom";
-import avatar from "../images/avatar.jpg";
+import React, { Component } from 'react';
+import { isAuthenticated } from '../auth';
+import { Redirect, Link } from 'react-router-dom';
+import avatar from '../images/avatar.jpg';
 
 // components
-import DeleteUser from "./DeleteUser";
-import FollowProfileButton from "./FollowProfileButton";
+import DeleteUser from './DeleteUser';
+import FollowProfileButton from './FollowProfileButton';
 
 // methods
-import { read } from "../user/apiUser";
+import { read } from '../user/apiUser';
 
 class Profile extends Component {
   constructor() {
@@ -18,7 +18,7 @@ class Profile extends Component {
       user: { following: [], followers: [] },
       redirectToSignin: false,
       following: false,
-      error: ""
+      error: ''
     };
   }
 
@@ -35,15 +35,13 @@ class Profile extends Component {
   clickFollowButton = callApi => {
     const userId = isAuthenticated().user._id;
     const token = isAuthenticated().token;
-
     callApi(userId, token, this.state.user._id).then(data => {
       if (data.error) {
-        this.setState({ error: data.error });
-      } else {
         this.setState({
-          user: data,
-          following: !this.state.following
+          error: data.error
         });
+      } else {
+        this.setState({ user: data, following: !this.state.following });
       }
     });
   };
@@ -80,35 +78,35 @@ class Profile extends Component {
   render() {
     const { redirectToSignin, user } = this.state;
 
-    if (redirectToSignin) return <Redirect to="signin" />;
+    if (redirectToSignin) return <Redirect to='signin' />;
 
     const photoUrl = user._id
       ? `http://localhost:8080/user/photo/${user._id}?${new Date().getTime()}`
       : avatar;
 
     return (
-      <div className="container">
-        <h2 className="mt-5 mb-5">Profile</h2>
-        <div className="row">
-          <div className="col-md-6">
+      <div className='container'>
+        <h2 className='mt-5 mb-5'>Profile</h2>
+        <div className='row'>
+          <div className='col-md-6'>
             <img
               src={photoUrl}
               alt={user.name}
-              style={{ height: "200px", width: "auto" }}
-              className="img-thumbnail"
+              style={{ height: '200px', width: 'auto' }}
+              className='img-thumbnail'
             />
           </div>
-          <div className="col-md-6">
-            <div className="lead mt-2">
+          <div className='col-md-6'>
+            <div className='lead mt-2'>
               <p>Hello {user.name}</p>
               <p>Email: {user.email}</p>
               <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
             {isAuthenticated().user &&
             isAuthenticated().user._id === user._id ? (
-              <div className="d-inline-block">
+              <div className='d-inline-block'>
                 <Link
-                  className="btn btn-raised btn-success mr-5"
+                  className='btn btn-raised btn-success mr-5'
                   to={`/user/edit/${isAuthenticated().user._id}`}
                 >
                   Edit Profile
@@ -124,10 +122,10 @@ class Profile extends Component {
           </div>
         </div>
 
-        <div className="row">
-          <div className="col md-12 mt-5 mb-5">
+        <div className='row'>
+          <div className='col md-12 mt-5 mb-5'>
             <hr />
-            <p className="lead">{user.about}</p>
+            <p className='lead'>{user.about}</p>
           </div>
         </div>
       </div>
