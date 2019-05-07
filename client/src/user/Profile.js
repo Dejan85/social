@@ -6,6 +6,7 @@ import avatar from '../images/avatar.jpg';
 // components
 import DeleteUser from './DeleteUser';
 import FollowProfileButton from './FollowProfileButton';
+import ProfileTabs from './ProfileTabs';
 
 // methods
 import { read } from '../user/apiUser';
@@ -119,6 +120,12 @@ class Profile extends Component {
                 onButtonClick={this.clickFollowButton}
               />
             )}
+
+            <hr />
+            <ProfileTabs
+              followers={user.followers}
+              following={user.following}
+            />
           </div>
         </div>
 
