@@ -7,7 +7,8 @@ const _ = require('lodash');
 exports.getPosts = (req, res) => {
   Post.find()
     .populate('postedBy', '_id name')
-    .select('_id title body')
+    .select('_id title body created')
+    .sort({ created: -1 })
     .then(result => {
       res.status(200).json(result);
     })
