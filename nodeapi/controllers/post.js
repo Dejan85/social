@@ -9,9 +9,7 @@ exports.getPosts = (req, res) => {
     .populate('postedBy', '_id name')
     .select('_id title body')
     .then(result => {
-      res.status(200).json({
-        posts: result
-      });
+      res.status(200).json(result);
     })
     .catch(err => {
       console.log(err);
