@@ -1,4 +1,4 @@
-export const read = (userId, token, post) => {
+export const create = (userId, token, post) => {
   return fetch(`http://localhost:8080/post/new/${userId}`, {
     method: 'POST',
     headers: {
