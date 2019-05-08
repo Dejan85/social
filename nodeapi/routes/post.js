@@ -31,7 +31,7 @@ router.get('/post/by/:userId', requireSignin, postsByUser);
 router.put('/post/:postId', requireSignin, isPoster, updatePost);
 router.delete('/post/:postId', requireSignin, isPoster, deletePost);
 // photo
-router.get('/user/photo/:postId', postPhoto);
+router.get('/post/photo/:postId', postPhoto);
 
 // param
 router.param('userId', userById); // any route containing :userId, our app will first execute userById()

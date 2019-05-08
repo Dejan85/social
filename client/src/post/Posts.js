@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import imagesProfile from '../images/avatar.jpg'
+import DefaultPostImage from '../images/postImage.gif';
 
 // methods
 import { list } from '../post/apiPost';
@@ -34,6 +34,13 @@ class Posts extends Component {
         return (
           <div className='card col-md-4' key={index}>
             <div className='card-body'>
+              <img
+                src={`http://localhost:8080/post/photo/${post._id}`}
+                alt={post.title}
+                onError={index => (index.target.src = `${DefaultPostImage}`)}
+                className='img-thumbnail mb-3'
+                style={{ height: '200px', width: 'auto' }}
+              />
               <h5 className='card-title'>{post.title}</h5>
               <p className='card-text'>{post.body.substring(0, 10)}</p>
               <br />
