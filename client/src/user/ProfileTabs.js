@@ -11,7 +11,7 @@ class ProfileTabs extends Component {
         <div className='row'>
           <div className='col-md-4'>
             <h3 className='text-primary'>Followers</h3>
-            <h3 />
+            <hr />
             {followers.map((person, i) => {
               return (
                 <div key={i}>
