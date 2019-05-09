@@ -17,10 +17,12 @@ const {
   postsByUser,
   deletePost,
   updatePost,
-  postPhoto
+  postPhoto,
+  singlePost
 } = require('../controllers/post');
 
 router.get('/posts', getPosts);
+router.get('/post/:postId', singlePost);
 router.post(
   '/post/new/:userId',
   requireSignin,
