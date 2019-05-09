@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import avatar from '../images/avatar.jpg';
 
 // methods
 import { isAuthenticated } from '../auth';
@@ -20,28 +19,6 @@ class NewPost extends Component {
       redirectToProfile: false
     };
   }
-
-  // init = userId => {
-  //   const token = isAuthenticated().token;
-  //   read(userId, token)
-  //     .then(data => {
-  //       if (data.error) {
-  //         this.setState({ redirectToProfile: true });
-  //       } else {
-  //         this.setState({
-  //           id: data._id,
-  //           name: data.name,
-  //           email: data.email,
-  //           error: '',
-  //           about: data.about,
-  //           loading: false
-  //         });
-  //       }
-  //     })
-  //     .catch(err => {
-  //       console.log(err);
-  //     });
-  // };
 
   componentDidMount() {
     this.postData = new FormData();
@@ -154,23 +131,11 @@ class NewPost extends Component {
   );
 
   render() {
-    const {
-      title,
-      body,
-      photo,
-      user,
-      error,
-      loading,
-      redirectToProfile
-    } = this.state;
+    const { title, body, user, error, loading, redirectToProfile } = this.state;
 
     if (redirectToProfile) {
       return <Redirect to={`/user/${user._id}`} />;
     }
-
-    // const photoUrl = id
-    //   ? `http://localhost:8080/user/photo/${id}?${new Date().getTime()}`
-    //   : avatar;
 
     return (
       <div className='container'>

@@ -10,6 +10,7 @@ import ProfileTabs from './ProfileTabs';
 
 // methods
 import { read } from '../user/apiUser';
+import { listByUser } from '../post/apiPost';
 
 class Profile extends Component {
   constructor() {
@@ -19,7 +20,8 @@ class Profile extends Component {
       user: { following: [], followers: [] },
       redirectToSignin: false,
       following: false,
-      error: ''
+      error: '',
+      posts: []
     };
   }
 
@@ -47,6 +49,17 @@ class Profile extends Component {
     });
   };
 
+  loadPosts = userId => {
+    const token = isAuthenticated().token;
+    listByUser(userId, token).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        this.setState({ posts: data });
+      }
+    });
+  };
+
   init = userId => {
     const token = isAuthenticated().token;
     read(userId, token)
@@ -59,6 +72,7 @@ class Profile extends Component {
             user: data,
             following
           });
+          this.loadPosts(data._id);
         }
       })
       .catch(err => {
@@ -77,7 +91,7 @@ class Profile extends Component {
   }
 
   render() {
-    const { redirectToSignin, user } = this.state;
+    const { redirectToSignin, user, posts } = this.state;
 
     if (redirectToSignin) return <Redirect to='signin' />;
 
@@ -131,6 +145,7 @@ class Profile extends Component {
             <ProfileTabs
               followers={user.followers}
               following={user.following}
+              posts={posts}
             />
           </div>
         </div>
