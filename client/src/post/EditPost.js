@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
+import DefaultPostImage from '../images/postImage.gif';
 
 // methods
 import { singlePost, update } from './apiPost';
@@ -148,13 +149,35 @@ class EditPost extends Component {
   );
 
   render() {
-    const { title, body, redirectToProfile } = this.state;
+    const { id, title, body, redirectToProfile, error, loading } = this.state;
     if (redirectToProfile) {
       return <Redirect to={`/user/${isAuthenticated().user._id}`} />;
     }
     return (
       <div className='container'>
         <h2 className='mt-5 mb-5'>{title}</h2>
+
+        <div
+          className='alert alert-danger'
+          style={{ display: error ? '' : 'none' }}
+        >
+          {error}
+        </div>
+        {loading ? (
+          <div className='jumbotron text-center'>
+            <h2>Loading...</h2>
+          </div>
+        ) : (
+          ''
+        )}
+
+        <img
+          style={{ height: '200px', width: 'auto' }}
+          className='img-thumbnail'
+          src={`http://localhost:8080/post/photo/${id}?${new Date().getTime()}`}
+          onError={i => (i.target.src = `${DefaultPostImage}`)}
+          alt={title}
+        />
         {this.editPostForm(title, body)}
       </div>
     );
