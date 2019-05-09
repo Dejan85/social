@@ -18,10 +18,17 @@ const {
   deletePost,
   updatePost,
   postPhoto,
-  singlePost
+  singlePost,
+  like,
+  unlike
 } = require('../controllers/post');
 
 router.get('/posts', getPosts);
+
+// like unlike
+router.put('/post/like', requireSignin, like);
+router.put('/post/unlike', requireSignin, unlike);
+
 router.get('/post/:postId', singlePost);
 router.post(
   '/post/new/:userId',
