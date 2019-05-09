@@ -12,6 +12,7 @@ import EditProfile from './user/EditProfile';
 import FindPeople from './user/FindPeople';
 import NewPost from './post/NewPost';
 import SinglePost from './post/SinglePost';
+import EditPost from './post/EditPost';
 
 // private route
 import PrivateRoute from './auth/PrivateRoute';
@@ -25,6 +26,7 @@ const MainRouter = () => (
       <PrivateRoute exact path='/user/:userId' component={Profile} />
       <PrivateRoute exact path='/findpeople' component={FindPeople} />
       <PrivateRoute exact path='/post/create' component={NewPost} />
+      <PrivateRoute exact path='/post/edit/:postId' component={EditPost} />
 
       {/* public route */}
       <Route exact path='/' component={Home} />
