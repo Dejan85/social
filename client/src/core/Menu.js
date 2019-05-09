@@ -28,6 +28,16 @@ const Menu = ({ history }) => {
           </Link>
         </li>
 
+        <li className='nav-item'>
+          <Link
+            className='nav-link'
+            to='/post/create'
+            style={isActive(history, '/post/create')}
+          >
+            Create Post
+          </Link>
+        </li>
+
         {!isAuthenticated() && (
           <>
             <li className='nav-item'>
@@ -62,15 +72,7 @@ const Menu = ({ history }) => {
                 Find People
               </Link>
             </li>
-            <li className='nav-item'>
-              <Link
-                className='nav-link'
-                to='/post/create'
-                style={isActive(history, '/post/create')}
-              >
-                Create Post
-              </Link>
-            </li>
+
             <li className='nav-item'>
               <Link
                 className='nav-link'
