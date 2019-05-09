@@ -4,7 +4,7 @@ import DefaultPostImage from '../images/postImage.gif';
 
 // methods
 import { isAuthenticated } from '../auth';
-import { singlePost, remove } from './apiPost';
+import { singlePost, remove, like, unlike } from './apiPost';
 
 class SinglePost extends Component {
   constructor() {
@@ -12,9 +12,17 @@ class SinglePost extends Component {
 
     this.state = {
       post: '',
-      redirectToHome: false
+      redirectToHome: false,
+      like: false,
+      likes: 0
     };
   }
+
+  checkLike = likes => {
+    const userId = isAuthenticated().user._id;
+    let match = likes.indexOf(userId) !== -1;
+    return match;
+  };
 
   componentDidMount() {
     const postId = this.props.match.params.postId;
@@ -23,7 +31,9 @@ class SinglePost extends Component {
         console.log(data.error);
       } else {
         this.setState({
-          post: data
+          post: data,
+          likes: data.likes.length,
+          like: this.checkLike(data.likes)
         });
       }
     });
@@ -49,9 +59,29 @@ class SinglePost extends Component {
     }
   };
 
+  likeToggle = () => {
+    let callApi = this.state.like ? unlike : like;
+    const userId = isAuthenticated().user._id;
+    const postId = this.state.post._id;
+    const token = isAuthenticated().token;
+
+    callApi(userId, token, postId).then(data => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        this.setState({
+          like: !this.state.like,
+          likes: data.likes.length
+        });
+      }
+    });
+  };
+
   renderPost = post => {
     const posterId = post.postedBy ? `/user/${post.postedBy._id}` : '';
     const posterName = post.postedBy ? post.postedBy.name : ' Unknown';
+
+    const { like, likes } = this.state;
 
     return (
       <div className='card-body'>
@@ -62,6 +92,9 @@ class SinglePost extends Component {
           className='img-thumbnail mb-3'
           style={{ height: '300px', width: '100%', objectFit: 'cover' }}
         />
+
+        <h3 onClick={this.likeToggle}>{likes} Like</h3>
+
         <p className='card-text'>{post.body}</p>
         <br />
         <p className='font-italic mark'>
