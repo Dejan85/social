@@ -77,13 +77,11 @@ class SinglePost extends Component {
               <>
                 <Link
                   to={`/post/edit/${post._id}`}
-                  className='btn btn-raised btn-primary btn-small mr-5'
+                  className='btn btn-raised btn-warning btn-small mr-5'
                 >
                   Update post
                 </Link>
-                <button className='btn btn-raised btn-warning mr-5'>
-                  Update Post
-                </button>
+
                 <button
                   onClick={this.deleteConfirmed}
                   className='btn btn-raised btn-danger'
