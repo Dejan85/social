@@ -103,7 +103,7 @@ class Profile extends Component {
       <div className='container'>
         <h2 className='mt-5 mb-5'>Profile</h2>
         <div className='row'>
-          <div className='col-md-6'>
+          <div className='col-md-4'>
             <img
               src={photoUrl}
               alt={user.name}
@@ -111,12 +111,15 @@ class Profile extends Component {
               className='img-thumbnail'
             />
           </div>
-          <div className='col-md-6'>
+          <div className='col-md-8'>
             <div className='lead mt-2'>
               <p>Hello {user.name}</p>
               <p>Email: {user.email}</p>
               <p>{`Joined ${new Date(user.created).toDateString()}`}</p>
             </div>
+            <Link className='btn btn-raised btn-info mr-5' to={`/post/create`}>
+              Create Post
+            </Link>
             {isAuthenticated().user &&
             isAuthenticated().user._id === user._id ? (
               <div className='d-inline-block'>
@@ -126,6 +129,7 @@ class Profile extends Component {
                 >
                   Edit Profile
                 </Link>
+
                 <DeleteUser userId={user._id} />
               </div>
             ) : (
