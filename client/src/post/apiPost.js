@@ -125,3 +125,39 @@ export const unlike = (userId, token, postId) => {
       console.log(err);
     });
 };
+
+export const comment = (userId, token, postId, comment) => {
+  return fetch(`http://localhost:8080/post/comment`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId, postId, comment })
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
+
+export const uncomment = (userId, token, postId, comment) => {
+  return fetch(`http://localhost:8080/post/uncomment`, {
+    method: 'PUT',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${token}`
+    },
+    body: JSON.stringify({ userId, postId, comment })
+  })
+    .then(response => {
+      return response.json();
+    })
+    .catch(err => {
+      console.log(err);
+    });
+};
