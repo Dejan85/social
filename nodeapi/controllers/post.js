@@ -164,15 +164,13 @@ exports.unlike = (req, res, next) => {
 };
 
 // comment
-exports.comment = (req, res, next) => {
+exports.comment = (req, res) => {
   let comment = req.body.comment;
   comment.postedBy = req.body.userId;
 
   Post.findByIdAndUpdate(
     req.body.postId,
-    {
-      $push: { comments: req.body.userId }
-    },
+    { $push: { comments: comment } },
     { new: true }
   )
     .populate('comments.postedBy', '_id name')
