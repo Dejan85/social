@@ -35,7 +35,6 @@ class SinglePost extends Component {
       if (data.error) {
         console.log(data.error);
       } else {
-        console.log(data);
         this.setState({
           post: data,
           likes: data.likes.length,

@@ -11,9 +11,23 @@ class Comment extends Component {
     super();
 
     this.state = {
-      text: ''
+      text: '',
+      error: ''
     };
   }
+
+  isValid = () => {
+    const { text } = this.state;
+    if (text.length === 0 || text.length > 150) {
+      this.setState({
+        error: 'Comment should not be empty and less then 150 characters long'
+      });
+
+      return false;
+    }
+
+    return true;
+  };
 
   handleChange = e => {
     this.setState({ text: e.target.value });
@@ -21,23 +35,56 @@ class Comment extends Component {
 
   addComment = e => {
     e.preventDefault();
+
+    if (!isAuthenticated()) {
+      this.setState({
+        error: 'Please signin to leave a comment'
+      });
+      return false;
+    }
+
+    if (this.isValid()) {
+      const userId = isAuthenticated().user._id;
+      const token = isAuthenticated().token;
+      const postId = this.props.postId;
+
+      comment(userId, token, postId, { text: this.state.text }).then(data => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          this.setState({ text: '' });
+          // dispatch fresh list of coment to parent (SinglePost)
+          this.props.updateComments(data.comments);
+        }
+      });
+    }
+  };
+
+  deleteComment = comment => {
     const userId = isAuthenticated().user._id;
     const token = isAuthenticated().token;
     const postId = this.props.postId;
 
-    comment(userId, token, postId, { text: this.state.text }).then(data => {
+    uncomment(userId, token, postId, comment).then(data => {
       if (data.error) {
         console.log(data.error);
       } else {
-        this.setState({ text: '' });
-        // dispatch fresh list of coment to parent (SinglePost)
         this.props.updateComments(data.comments);
       }
     });
   };
 
+  deleteConfirmed = comment => {
+    let answer = window.confirm('Are you sure want to delete your comment?');
+    if (answer) {
+      this.deleteComment(comment);
+    }
+  };
+
   render() {
     const { comments } = this.props;
+    const { error } = this.state;
+
     return (
       <div>
         <h2 className='mt-5 mb-5'>Leave a comment</h2>
@@ -54,7 +101,15 @@ class Comment extends Component {
             <button className='btn btn-raised btn-success mt-2'>Post</button>
           </div>
         </form>
-        <div className='col-md-4'>
+
+        <div
+          className='alert alert-danger'
+          style={{ display: error ? '' : 'none' }}
+        >
+          {error}
+        </div>
+
+        <div className='col-md-12'>
           <h3 className='text-primary'>{comments.length} Comments</h3>
           <hr />
           {comments.map((comment, i) => {
@@ -88,6 +143,23 @@ class Comment extends Component {
                         {comment.postedBy.name}{' '}
                       </Link>
                       on {new Date(comment.created).toDateString()}
+                      <span>
+                        {isAuthenticated().user &&
+                          isAuthenticated().user._id ===
+                            comment.postedBy._id && (
+                            <>
+                              <span
+                                onClick={() => {
+                                  this.deleteConfirmed(comment);
+                                }}
+                                className='text-danger float-right mr-1'
+                                style={{ cursor: 'pointer' }}
+                              >
+                                Remove
+                              </span>
+                            </>
+                          )}
+                      </span>
                     </p>
                   </div>
                 </div>
