@@ -35,14 +35,22 @@ class SinglePost extends Component {
       if (data.error) {
         console.log(data.error);
       } else {
+        console.log(data);
         this.setState({
           post: data,
           likes: data.likes.length,
-          like: this.checkLike(data.likes)
+          like: this.checkLike(data.likes),
+          comments: data.comments
         });
       }
     });
   }
+
+  updateComments = comments => {
+    this.setState({
+      comments
+    });
+  };
 
   deletePost = () => {
     const postId = this.props.match.params.postId;
@@ -62,12 +70,6 @@ class SinglePost extends Component {
     if (answer) {
       this.deletePost();
     }
-  };
-
-  updateComments = comments => {
-    this.setState({
-      comments
-    });
   };
 
   likeToggle = () => {
@@ -164,7 +166,6 @@ class SinglePost extends Component {
 
   render() {
     const { post, redirectToHome, redirectToSignin, comments } = this.state;
-
     if (redirectToHome) {
       return <Redirect to={`/`} />;
     } else if (redirectToSignin) {
@@ -184,7 +185,7 @@ class SinglePost extends Component {
 
         <Comment
           postId={post._id}
-          comments={comments}
+          comments={comments.reverse()}
           updateComments={this.updateComments}
         />
       </div>

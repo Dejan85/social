@@ -7,7 +7,8 @@ const _ = require('lodash');
 exports.getPosts = (req, res) => {
   Post.find()
     .populate('postedBy', '_id name')
-
+    .populate('comments', 'text created')
+    .populate('comments.postedBy', '_id name')
     .select('_id title body created likes')
     .sort({ created: -1 })
     .then(result => {

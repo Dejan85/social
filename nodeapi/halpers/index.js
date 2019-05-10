@@ -21,12 +21,13 @@ exports.userById = (req, res, next, id) => {
 exports.postById = (req, res, next, id) => {
   Post.findById(id)
     .populate('postedBy', '_id name')
-    .populate('comments', 'text created')
     .populate('comments.postedBy', '_id name')
+    .populate('postedBy', '_id name role')
+    .select('_id title body created likes comments photo')
     .exec((err, post) => {
       if (err || !post) {
-        res.status(400).json({
-          err
+        return res.status(400).json({
+          error: err
         });
       }
       req.post = post;
